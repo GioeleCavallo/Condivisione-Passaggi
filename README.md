@@ -1,5 +1,4 @@
 # Condivisione-Passaggi
-## Progetto
 Autori: Gioele Cavallo, Gianni Grasso
 
 ## Info
@@ -9,4 +8,4 @@ Autori: Gioele Cavallo, Gianni Grasso
 
 - [Documentazione](Documenti/)
 
-- [QdC Secondo Semestre Pilotaggio Drone](Documenti/QdC_SecondoSemestre_pilotaggioDrone.pdf)
+- [QdC](Documenti/QdC_SecondoSemestre_pilotaggioDrone.pdf)
