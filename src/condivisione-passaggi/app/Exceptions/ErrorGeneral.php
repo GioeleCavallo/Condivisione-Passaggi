@@ -1,5 +1,7 @@
 <?php 
 
+namespace App\Exceptions;
+
 class ErrorGeneral {
 
     public $title;

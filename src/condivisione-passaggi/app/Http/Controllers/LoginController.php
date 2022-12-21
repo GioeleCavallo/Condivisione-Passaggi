@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Exceptions\ErrorGeneral;
+use App\Exceptions\ErrorGeneral;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -18,6 +19,7 @@ class LoginController extends Controller
         $user = DB::table('users')
                 ->where('email', $email)
                 ->first();
+        if($user == null){return false;}
         return Hash::check($psw, $user->password); 
        /* foreach ($users as $user) {
             if (Hash::check($psw, $user->password)) {
@@ -29,21 +31,28 @@ class LoginController extends Controller
 
     public function checkLogin(Request $request)
     {
-        $input = $request->all();
-        $errors = array();
+        //$input =$request->all() ;
+        $messages = array();
         
-        $request->validate([
+      
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
-        if (isset($request->validator) && $request->validator->fails()) {
-            return back();
+        
+        if ($validator->fails()) {
+            $messages[] = "Set correct fields inputs";
+        } else{
+            if($this::rightLogin($request->email, $request->password)){
+                echo "logged in";//return view('admin');
+                return;
+            }else{
+                $messages[] = "Wrong username or password";
+            }
         }
-        if($this::rightLogin($request->email, $request->password)){
-            echo "logged in";//return view('admin');
-            return;
-        }
-        $errors[] = new ErrorGeneral("Login", "Wrong username or password",0);
-        return back()->with("errors", $errors);
+        //$messages = "email";
+        return back()->with('errors', $messages);
+        
+    
     }
 }

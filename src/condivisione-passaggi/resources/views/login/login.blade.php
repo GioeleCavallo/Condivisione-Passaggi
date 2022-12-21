@@ -5,7 +5,6 @@
  
 @section('content')
         <div>
-            <h1>THI IS LOGIN</h1>
             <form  id="form" method="POST" action="/checkLogin">
             @csrf
                 <h1 class="mb-3 fw-normal">Login</h1>

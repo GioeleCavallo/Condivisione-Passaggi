@@ -25,16 +25,14 @@
     
     <body>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
-
-        @if ($errors)
-            <?php $errors_level = ["danger","warning"]; ?>
-            @foreach ($errors as $err)
-
-                <div class="alert alert-"{{ $errors_level[$err->level] }} role="alert">
-                    <b>{{$err->name}} </b>{{$err->description}}
-                </div>
-            @endforeach
-        @endif
+    @if (session('errors'))
+        @foreach (session('errors') as $err)
+            <div class="alert alert-danger" role="alert">
+                <b>{{$err}} </b>
+            </div>
+        @endforeach
+        </div>
+    @endif
         <div class="container">
             @yield('content')
         </div>
