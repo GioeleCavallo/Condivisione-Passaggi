@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Exceptions\ErrorGeneral;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,7 +30,8 @@ class LoginController extends Controller
     public function checkLogin(Request $request)
     {
         $input = $request->all();
- 
+        $errors = array();
+        
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -41,8 +43,7 @@ class LoginController extends Controller
             echo "logged in";//return view('admin');
             return;
         }
-        echo "Erro login";
-        return;
-        //return back()->with("failed", "login failed");
+        $errors[] = new ErrorGeneral("Login", "Wrong username or password",0);
+        return back()->with("errors", $errors);
     }
 }
