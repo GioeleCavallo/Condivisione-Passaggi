@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +18,12 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/', [LoginController::class, 'index']);
 Route::post('/checkLogin', [LoginController::class, 'checkLogin']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/homePage', [UserController::class, 'home']);
+    Route::get('/cars', [CarController::class, 'index']);
+    Route::post('/addCar', [CarController::class, 'addCar']);
+    Route::post('/updatePassword', [UserController::class, 'updatePassword']);
+});
+
+Route::post('/logout', [UserController::class, 'logout']);
