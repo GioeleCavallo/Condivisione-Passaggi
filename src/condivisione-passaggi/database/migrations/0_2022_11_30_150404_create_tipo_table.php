@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nome')->primary();
         });
         $items = [
-            ['nome' => 'geitore'],
+            ['nome' => 'genitore'],
             ['nome' => 'admin']
         ];
 
