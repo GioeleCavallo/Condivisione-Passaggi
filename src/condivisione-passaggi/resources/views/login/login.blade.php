@@ -22,7 +22,11 @@
                     <label class="form-check-label" for="flexSwitchCheckChecked">Remember me</label>
                 </div>
                 <button class="w-100 btn btn-primary btn-lg" type="submit">Login</button>
-                
+                <br>
+                <br>
+                <h1>
+                Questo progetto aiuterà i genitori a trovare un modo per organizzare il passaggio dei propri figli per il tempo libero e non. In questo modo si potrà ottimizzare il tempo condividendo i passaggi e i posti in auto, in più si avrà un impatto positivo per l’ambiente.
+                </h1>
             </form>
         </div>
         
