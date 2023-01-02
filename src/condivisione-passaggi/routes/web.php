@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/cars', [CarController::class, 'index']);
     Route::get('/car/{targa}', [CarController::class, 'car']);
+    Route::get('/car/{targa}/journeys', [CarController::class, 'journeys']);
+    Route::post('/addJourney', [CarController::class, 'addJourney']);
     Route::post('/updateCar', [CarController::class, 'updateCar']);
     Route::post('/addCar', [CarController::class, 'addCar']);
 });

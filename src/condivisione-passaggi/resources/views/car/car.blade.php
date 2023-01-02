@@ -19,6 +19,7 @@
                 @endforeach
             </select>
             <a href="#" id="changeAuto">modifica auto<a>
+            <a href="#" id="tragittiAuto">tragitti auto<a>
             <br><br>
             @endif
             <h1>{{ $user->email }}, aggiungi un'auto:</h1>
@@ -47,6 +48,7 @@
             {
                 $targa = $( "#cars option:selected" ).text();
                 $("#changeAuto").attr("href", "{{url('/') }}/car/"+$targa);
+                $("#tragittiAuto").attr("href", "{{url('/') }}/car/"+$targa+"/journeys");
             }
 
             $( "#cars" ).change(function() {
