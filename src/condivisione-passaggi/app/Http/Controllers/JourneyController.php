@@ -8,13 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class CarController extends Controller
+class JourneyController extends Controller
 {
     public function index(){
-
         $user = auth()->user();
 
-        $targhe = $this->selectTargheUser($user);
+        $tragitti = $this->selectTragittiUser($user);
 
         //echo $targhe[0]->targa;
         // Mostra la pagina personale dell'utente
@@ -31,19 +30,6 @@ class CarController extends Controller
         ->where('targa', $targa)
         ->first();
         return view('car.showCar', ['car' => $car]);
-    }
-
-    public function journeys($targa){
-        $user = auth()->user();
-        if(!$this->existsForUser($targa,$user->id)){
-            return redirect('cars')
-            ->with("errors",["Car doesn't exists"]);
-        }
-        $journeys = DB::table('tragitto')
-        ->where('tragitto_auto', $targa)
-        ->get();
-
-        return view('car.showJourneys', ['journeys' => $journeys, 'targa' => $targa]);
     }
 
     private function validateInput(Request $request){
@@ -108,47 +94,6 @@ class CarController extends Controller
         return redirect("cars");
     }
 
-    public function addJourney(Request $request) {
-        $user = auth()->user();
-
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required',
-            'targa' => 'required',
-            'check_list' => 'required',
-            'descrizione' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect("car/" . $validated['targa'] . "/journeys")
-            ->with("errors",["Insert valid inputs"])
-            ->withInput();
-        }
-        $validated = $validator->validated();
-
-        $posti = DB::table('auto')
-        ->select('posti')
-        ->where('targa',$validated['targa'])
-        ->first();
-
-        $tragittoId = DB::table('tragitto')->insertGetId([
-            'nome' => $validated['nome'],
-            'descrizione' => $validated['descrizione'],
-            'tragitto_auto' => $validated['targa'],
-            'numero_persone' => $posti->posti
-        ]);
-
-
-        foreach ($validated['check_list'] as $day) {
-            DB::table('giorno_tragitto')->insert([
-                'giorno_nome' => $day,
-                'tragitto_id' => $tragittoId
-            ]);
-        }
-        
-        return redirect("car/" . $validated['targa'] . "/journeys");
-    }
-
-
     private function exists($targa){
         return DB::table('auto')->where('targa', $targa)->exists();
     }
@@ -160,11 +105,11 @@ class CarController extends Controller
         ->exists();
     }
 
-    private function selectTargheUser($user){
+    private function selectTragittiAuto($auto){
 
         return DB::table('auto')
         ->select('targa')
-        ->where('auto_user',$user->id)
+        ->where('auto_user',$auto->targa)
         ->get();
     }
 
